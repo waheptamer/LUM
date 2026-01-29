@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>اختبار المعرفة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --text-color: #0062ff;
+    --card-bg: rgba(255, 255, 255, 0.75);
+    --card-border: rgba(255, 255, 255, 0.5);
+    --primary: #2563eb;
+    --secondary: #4f46e5;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --overlay-color: rgba(255, 255, 255, 0);
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: #f0f0f0;
+    color: var(--text-color);
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#timer {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #d00;
+    text-align: center;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px -10px var(--shadow);
+}
+
+.card h3 {
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.card label {
+    display: block;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    text-align: center;
+    font-weight: bold;
+    color: var(--secondary);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2 style="text-align:center; margin-bottom:20px;">اختبار المعرفة</h2>
+<div id="timer">الوقت المتبقي: 15:00</div>
+
+<form id="quiz">
+  <div class="card">
+    <h3>1) عاصمة مصر؟</h3>
+    <label><input type="radio" name="q1" value="0"> اسكندرية</label>
+    <label><input type="radio" name="q1" value="1"> القاهرة</label>
+  </div>
+
+  <div class="card">
+    <h3>2) 2 + 2 = ؟</h3>
+    <label><input type="radio" name="q2" value="1"> 4</label>
+    <label><input type="radio" name="q2" value="0"> 5</label>
+  </div>
+
+  <div class="card">
+    <h3>3) أكبر كوكب في المجموعة الشمسية؟</h3>
+    <label><input type="radio" name="q3" value="1"> المشتري</label>
+    <label><input type="radio" name="q3" value="0"> الأرض</label>
+  </div>
+
+  <div class="card">
+    <h3>4) لون السماء يوم مشمس؟</h3>
+    <label><input type="radio" name="q4" value="1"> أزرق</label>
+    <label><input type="radio" name="q4" value="0"> أخضر</label>
+  </div>
+
+  <div class="card">
+    <h3>5) 5 × 5 = ؟</h3>
+    <label><input type="radio" name="q5" value="1"> 25</label>
+    <label><input type="radio" name="q5" value="0"> 20</label>
+  </div>
+
+  <!-- تقدر تضيف باقي الأسئلة بنفس الكارد -->
+
+  <button type="button" onclick="finish()">إنهاء الاختبار</button>
+</form>
+
+<div id="result"></div>
+</div>
+
+<script>
+let totalTime = 19 * 60; // 15 دقيقة
+let timer = document.getElementById('timer');
+
+function updateTimer() {
+  let minutes = Math.floor(totalTime / 60);
+  let seconds = totalTime % 60;
+  timer.innerText = `الوقت المتبقي: ${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+  if(totalTime <= 0) finish();
+  else { totalTime--; setTimeout(updateTimer, 1000); }
+}
+
+updateTimer();
+
+function finish() {
+  const answers = document.querySelectorAll('input[type="radio"]:checked');
+  let score = 0;
+  answers.forEach(a => score += Number(a.value));
+  document.getElementById("result").innerText = `نتيجتك: ${score} من 5`; // عدل العدد على حسب أسئلتك
+  document.querySelectorAll('input').forEach(i => i.disabled = true);
+  timer.innerText = 'انتهى الوقت';
+}
+</script>
+
+</body>
+</html>

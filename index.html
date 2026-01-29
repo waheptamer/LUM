@@ -1,107 +1,106 @@
-<!doctype html>
-<html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>اختار المادة</title>
-
-  <style>
-    body{
-      margin:0;padding:0;font-family:Tahoma;direction:rtl;
-      background:#f3f5f7;color:#000;
-      transition:0.3s;
-    }
-    header{
-      background:#0b74de;color:#fff;
-      padding:20px;text-align:center;
-      font-size:20px;font-weight:bold;
-      position:relative;
-    }
-    .dark-btn{
-      position:absolute;
-      left:15px;top:50%;
-      transform:translateY(-50%);
-      background:rgba(255,255,255,0.25);
-      border:none;
-      border-radius:8px;
-      padding:6px 10px;
-      font-size:16px;
-      cursor:pointer;
-      color:#fff;
-    }
-    .container{max-width:900px;margin:30px auto;padding:0 20px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
-    .btn{
-      display:block;text-align:center;padding:20px;
-      background:#fff;border-radius:12px;
-      font-weight:bold;font-size:18px;
-      text-decoration:none;color:#0b74de;
-      box-shadow:0 6px 18px rgba(0,0,0,0.07);
-      transition:0.15s;
-    }
-    .btn:hover{transform:translateY(-5px);}
-
-    /* الوضع الليلي */
-    body.dark{
-      background:#0f172a;
-      color:#e5e7eb;
-    }
-    body.dark .btn{
-      background:#1e293b;
-      color:#60a5fa;
-    }
-    body.dark header{
-      background:#020617;
-    }
-  </style>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q00R14H6BL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-Q00R14H6BL');
-</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3603404825408998"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بوابة الجامعة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3603404825408998"
      crossorigin="anonymous"></script>
 </head>
-
 <body>
-  <header>
-    2025
-    <button class="dark-btn" onclick="toggleDark()">🌙</button>
-  </header>
 
-  <div class="container">
-    <div class="grid">
-      <a class="btn" href="Math 0.html">Math 0</a>
-      <a class="btn" href="Math 1.html">Math 1</a>
-      <a class="btn" href="Physics.html">Physics</a>
-      <a class="btn" href="CS.html">CS</a>
-      <a class="btn" href="ethics.html">Ethics</a>
-      <a class="btn" href="E-commerce.html">E-COMMERCE</a>
-      <a class="btn" href="Englich.html">English</a>
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="خلفيه.mp4" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+
+    <header>
+        <div class="logo">
+            <h1>جامعة اللوتس</h1>
+        </div>
+        <div class="theme-toggle" id="theme-btn" onclick="toggleTheme()">🌙</div>
+    </header>
+
+    <div class="container">
+        <div class="section-header">
+            <h2>لوحة الطالب الإلكترونية</h2>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-content">
+                    <h3>سنه اولى الترم الاول</h3>
+                    <p></p>
+                    <a href="اولى ترم اول/index.html" class="btn">عرض المحتوى</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <h3>سنه اولى الترم التاني</h3>
+                    <p></p>
+                    <a href="اولى ترم تاني/index.html" class="btn">عرض المحتوى</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-  // لما الصفحة تتحمل، شوف لو الداكن متفعل قبل كده
-  if(localStorage.getItem('dark-mode') === 'enabled'){
-    document.body.classList.add('dark');
-  }
+    <footer>
+        <p>جامعه اللوتس 2026</p>
+    </footer>
 
-  function toggleDark(){
-    document.body.classList.toggle("dark");
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
+        const htmlElement = document.documentElement;
 
-    // حفظ الاختيار في localStorage
-    if(document.body.classList.contains('dark')){
-      localStorage.setItem('dark-mode','enabled');
-    } else {
-      localStorage.setItem('dark-mode','disabled');
-    }
-  }
-</script>
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = '☀️';
+        }
 
+        function toggleTheme() {
+            if (htmlElement.getAttribute('data-theme') === 'dark') {
+                htmlElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeBtn.textContent = '🌙';
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeBtn.textContent = '☀️';
+            }
+        }
+
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.card').forEach(card => { observer.observe(card); });
+
+        if (window.matchMedia("(min-width: 992px)").matches) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2; const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -8; 
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+                });
+            });
+        }
+    </script>
 </body>
 </html>

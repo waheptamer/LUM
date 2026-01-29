@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بوابة الجامعة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3603404825408998"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="خلفيه.mp4" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+
+    <header>
+        <div class="logo">
+            <h1>جامعة اللوتس</h1>
+        </div>
+        <div class="theme-toggle" id="theme-btn" onclick="toggleTheme()">🌙</div>
+    </header>
+
+    <div class="container">
+        <div class="section-header">
+            <h2>لوحة الطالب الإلكترونية</h2>
+            <p>الفصل الدراسي الثاني 2026</p>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon">🚀</div>
+                    <h3>Electronics</h3>
+                    <p></p>
+                    <a href="مقدمه البرمجه.html" class="btn">عرض المحتوى</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon">📐</div>
+                    <h3>Discrete</h3>
+                    <p></p>
+                    <a href="#" class="btn">عرض المحتوى</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon">⚡</div>
+                    <h3>Logic</h3>
+                    <p></p>
+                    <a href="#" class="btn">عرض المحتوى</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon">💾</div>
+                    <h3>Cyber Security</h3>
+                    <p></p>
+                    <a href="#" class="btn">عرض المحتوى</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon">🎨</div>
+                    <h3>Computer Programming & problem Solving</h3>
+                    <p></p>
+                    <a href="#" class="btn">عرض المحتوى</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon">🤖</div>
+                    <h3>الذكاء الاصطناعي</h3>
+                    <p>الشبكات العصبية وتعلم الآلة.</p>
+                    <a href="#" class="btn">عرض المحتوى</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>جامعه اللوتس 2026</p>
+    </footer>
+
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
+        const htmlElement = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = '☀️';
+        }
+
+        function toggleTheme() {
+            if (htmlElement.getAttribute('data-theme') === 'dark') {
+                htmlElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeBtn.textContent = '🌙';
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeBtn.textContent = '☀️';
+            }
+        }
+
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.card').forEach(card => { observer.observe(card); });
+
+        if (window.matchMedia("(min-width: 992px)").matches) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2; const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -8; 
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+                });
+            });
+        }
+    </script>
+</body>
+</html>
