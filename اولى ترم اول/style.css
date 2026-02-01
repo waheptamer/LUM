@@ -14,7 +14,7 @@
   --text-color: #f1f5f9;
   --card-bg: rgba(30, 41, 59, 0.85);
   --card-border: rgba(255, 255, 255, 0.1);
-  --primary: #000000;
+  --primary: #131429;
   --secondary: #818cf8;
   --shadow: rgba(255, 104, 10, 0.897);
   --overlay-color: rgba(0, 0, 0, 0.6);
@@ -80,7 +80,7 @@ header {
 .logo h1 {
   font-size: 1.3rem;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--text-color);
 }
 
 .theme-toggle {
