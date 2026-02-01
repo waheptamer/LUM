@@ -1,44 +1,102 @@
 <!doctype html>
-<html lang="ar">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>E-commerce</title>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>E-commerce</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3603404825408998"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-  <link rel="stylesheet" href="style.css">
-</head>
+  <body>
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="خلفيه.mp4" type="video/mp4" />
+      متصفحك لا يدعم تشغيل الفيديو.
+    </video>
 
-<body>
+    <header>
+      <div class="logo">
+        <h1>E-commerce</h1>
+      </div>
+      <div class="theme-toggle" id="theme-btn" onclick="toggleTheme()">🌙</div>
+    </header>
 
-<header>E-commerce</header>
+    <div class="container">
+      <div class="card visible">
+        <embed
+          src="E commerc ( STANDS FOR).pdf"
+          type="application/pdf"
+          width="100%"
+          height="600px"
+          style="border: 1px solid hsl(259, 100%, 34%); border-radius: 10px"
+        />
+      </div>
+    </div>
+    <script>
+      const themeBtn = document.getElementById("theme-btn");
+      const htmlElement = document.documentElement;
 
-<div class="container">
+      if (localStorage.getItem("theme") === "dark") {
+        htmlElement.setAttribute("data-theme", "dark");
+        themeBtn.textContent = "☀️";
+      }
 
-  <a class="back" href="E-commerce.html">← رجوع للمادة</a>
+      function toggleTheme() {
+        if (htmlElement.getAttribute("data-theme") === "dark") {
+          htmlElement.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light");
+          themeBtn.textContent = "🌙";
+        } else {
+          htmlElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("theme", "dark");
+          themeBtn.textContent = "☀️";
+        }
+      }
 
-  <div class="card">
-  <h3>ملخص المادة (PDF)</h3>
-  <!-- المعاينة داخل الصفحة -->
-  <iframe src="E commerc ( STANDS FOR).pdf" width="100%" height="500px" style="border:1px solid #ccc; border-radius:10px;"></iframe>
-  
-  <!-- زر التحميل -->
-  <p style="margin-top:10px;">
-    <a href="E commerc ( STANDS FOR).pdf" download style="text-decoration:none;color:#0b74de;font-weight:bold;">
-      اضغط هنا لتحميل الملخص
-    </a>
-  </p>
-</div>
+      const observerOptions = { threshold: 0.1 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add("visible");
+            }, index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      document.querySelectorAll(".card").forEach((card) => {
+        observer.observe(card);
+      });
 
- <div class="card">
-    <h3>فيديو الشرح</h3>
-    <iframe width="100%" height="250"
-      src="https://www.youtube.com/embed/VIDEO_ID"
-      style="border:0;border-radius:10px" allowfullscreen>
-    </iframe>
-  </div>
-
-
-</div>
-<script src="dark-mode.js.js"></script>
-</body>
+      if (window.matchMedia("(min-width: 992px)").matches) {
+        const cards = document.querySelectorAll(".card");
+        cards.forEach((card) => {
+          card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -8;
+            const rotateY = ((x - centerX) / centerX) * 8;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+          });
+          card.addEventListener("mouseleave", () => {
+            card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+          });
+        });
+      }
+    </script>
+  </body>
 </html>

@@ -1,53 +1,126 @@
 <!doctype html>
-<html lang="ar">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Final Review</title>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Key Questions about Ethics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3603404825408998"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
- <link rel="stylesheet" href="style.css">
-</head>
+  <body>
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="خلفيه.mp4" type="video/mp4" />
+      متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+    <header>
+      <div class="logo">
+        <h1>Key Questions about Ethics</h1>
+      </div>
+      <div class="theme-toggle" id="theme-btn" onclick="toggleTheme()">🌙</div>
+    </header>
 
-<body>
+    <div class="container">
+      <div class="grid">
+        <p style="margin-top: 10px">
+          <a
+            href="https://drive.google.com/file/d/1lfyWYaz5a8oyCoFrxsPxL6BJ3injsFXS/view?usp=sharing"
+            target="_blank"
+            style="
+              display: inline-block;
+              padding: 10px 20px;
+              background-color: #0b74de;
+              color: #fff;
+              font-weight: bold;
+              text-decoration: none;
+              border-radius: 6px;
+              transition:
+                background-color 0.3s,
+                transform 0.2s;
+            "
+            onmouseover="
+              this.style.backgroundColor = '#095cb0';
+              this.style.transform = 'scale(1.05)';
+            "
+            onmouseout="
+              this.style.backgroundColor = '#0b74de';
+              this.style.transform = 'scale(1)';
+            "
+          >
+            فتح أو تحميل الملف
+          </a>
+        </p>
+      </div>
+      <footer>
+        <p>جامعة اللوتس 2026</p>
+      </footer>
 
-<header>Final Review</header>
+      <script>
+        const themeBtn = document.getElementById("theme-btn");
+        const htmlElement = document.documentElement;
 
-<div class="container">
+        if (localStorage.getItem("theme") === "dark") {
+          htmlElement.setAttribute("data-theme", "dark");
+          themeBtn.textContent = "☀️";
+        }
 
-  <a class="back" href="ethics.html">← رجوع للمادة</a>
+        function toggleTheme() {
+          if (htmlElement.getAttribute("data-theme") === "dark") {
+            htmlElement.setAttribute("data-theme", "light");
+            localStorage.setItem("theme", "light");
+            themeBtn.textContent = "🌙";
+          } else {
+            htmlElement.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark");
+            themeBtn.textContent = "☀️";
+          }
+        }
 
-  <div class="card">
-  <h3>ملخص المادة (PDF)</h3>
-  <p style="margin-top:10px;">
-  <a 
-    href="https://drive.google.com/file/d/1lfyWYaz5a8oyCoFrxsPxL6BJ3injsFXS/view?usp=sharing"
-    target="_blank"
-    style="
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #0b74de;
-      color: #fff;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background-color 0.3s, transform 0.2s;
-    "
-    onmouseover="this.style.backgroundColor='#095cb0'; this.style.transform='scale(1.05)';"
-    onmouseout="this.style.backgroundColor='#0b74de'; this.style.transform='scale(1)';"
-  >
-    فتح أو تحميل الملف
-  </a>
-</p>
-</div>
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => {
+                entry.target.classList.add("visible");
+              }, index * 100);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+        document.querySelectorAll(".card").forEach((card) => {
+          observer.observe(card);
+        });
 
-<div class="card">
-    <h3>فيديو الشرح</h3>
-    <iframe width="100%" height="250"
-      src="https://www.youtube.com/embed/VIDEO_ID"
-      style="border:0;border-radius:10px" allowfullscreen>
-    </iframe>
-  </div>
-</div>
-<script src="dark-mode.js.js"></script>
-</body>
+        if (window.matchMedia("(min-width: 992px)").matches) {
+          const cards = document.querySelectorAll(".card");
+          cards.forEach((card) => {
+            card.addEventListener("mousemove", (e) => {
+              const rect = card.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              const centerX = rect.width / 2;
+              const centerY = rect.height / 2;
+              const rotateX = ((y - centerY) / centerY) * -8;
+              const rotateY = ((x - centerX) / centerX) * 8;
+              card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+            });
+            card.addEventListener("mouseleave", () => {
+              card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+            });
+          });
+        }
+      </script>
+    </div>
+  </body>
 </html>
