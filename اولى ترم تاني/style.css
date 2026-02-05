@@ -12,7 +12,7 @@
 [data-theme="dark"] {
   /* الألوان في الوضع الليلي */
   --text-color: #f1f5f9;
-  --card-bg: rgba(30, 41, 59, 0.85);
+  --card-bg: rgb(22, 26, 32);
   --card-border: rgba(255, 255, 255, 0.1);
   --primary: #000000;
   --secondary: #4916fe;
@@ -80,7 +80,7 @@ header {
 .logo h1 {
   font-size: 1.3rem;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--text-color);
 }
 
 .theme-toggle {
@@ -186,7 +186,7 @@ header {
 .card h3 {
   font-size: 1.4rem;
   margin-bottom: 10px;
-  color: var(--primary);
+  color: var(--text-color);
 }
 
 .card p {
