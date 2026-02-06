@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>امتحان مقدمة البرمجة</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Tajawal", sans-serif;
+      }
+
+      body {
+        margin: 0;
+        color: #fff;
+      }
+
+      #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+        object-fit: cover;
+      }
+
+      header {
+        padding: 20px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: rgba(0, 0, 0, 0.65);
+        padding: 25px;
+        border-radius: 15px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .question {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .question h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        cursor: pointer;
+      }
+
+      input[type="radio"] {
+        margin-left: 8px;
+      }
+
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background: #00c6ff;
+        color: #000;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background: #00a3d9;
+      }
+
+      .result {
+        margin-top: 25px;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 20px;
+        text-align: center;
+        display: none;
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      .correct-answer {
+        color: #00ff99;
+        font-weight: bold;
+      }
+
+      .wrong-answer {
+        color: #ff6b6b;
+        font-weight: bold;
+      }
+
+      .explain {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.4);
+        font-size: 15px;
+        display: none;
+      }
+
+      footer {
+        text-align: center;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="خلفيه.mp4" type="video/mp4" />
+    </video>
+
+    <header>
+      <p>امتحان مقدمة البرمجة</p>
+    </header>
+
+    <div class="container">
+      <h2>أجب عن الأسئلة التالية</h2>
+
+      <!-- سؤال 1 -->
+      <div
+        class="question"
+        data-answer="b"
+        data-explain="البرمجة هي عملية كتابة أوامر وتعليمات يفهمها الحاسوب لتنفيذ مهام محددة."
+      >
+        <h3>1️⃣ ما هي البرمجة؟</h3>
+
+        <label><input type="radio" name="q1" value="a" /> نوع من الأجهزة</label>
+        <label
+          ><input type="radio" name="q1" value="b" /> طريقة لكتابة أوامر
+          للحاسوب</label
+        >
+        <label><input type="radio" name="q1" value="c" /> نظام تشغيل</label>
+
+        <div class="explain"></div>
+      </div>
+
+      <!-- سؤال 2 -->
+      <div
+        class="question"
+        data-answer="a"
+        data-explain="الخوارزميات يمكن كتابتها بأي لغة أو حتى باللغة العربية طالما توضح الخطوات بشكل منطقي."
+      >
+        <h3>2️⃣ أي لغة تستخدم لكتابة الخوارزميات؟</h3>
+
+        <label><input type="radio" name="q2" value="a" /> أي لغة برمجة</label>
+        <label><input type="radio" name="q2" value="b" /> HTML فقط</label>
+        <label><input type="radio" name="q2" value="c" /> CSS فقط</label>
+
+        <div class="explain"></div>
+      </div>
+
+      <!-- سؤال 3 -->
+      <div
+        class="question"
+        data-answer="c"
+        data-explain="المصفوفة هي تركيب بيانات يُستخدم لتخزين مجموعة من العناصر المتشابهة تحت اسم واحد."
+      >
+        <h3>3️⃣ ما هي المصفوفة؟</h3>
+
+        <label><input type="radio" name="q3" value="a" /> دالة</label>
+        <label><input type="radio" name="q3" value="b" /> شرط</label>
+        <label
+          ><input type="radio" name="q3" value="c" /> مجموعة عناصر
+          متشابهة</label
+        >
+
+        <div class="explain"></div>
+      </div>
+
+      <button class="btn" onclick="submitExam()">تسليم الامتحان</button>
+
+      <div class="result" id="result"></div>
+    </div>
+
+    <footer>
+      <p>© جامعة اللوتس 2026</p>
+    </footer>
+
+    <script>
+      function submitExam() {
+        let score = 0;
+        const questions = document.querySelectorAll(".question");
+
+        questions.forEach((q) => {
+          const correct = q.dataset.answer;
+          const explanation = q.dataset.explain;
+          const options = q.querySelectorAll("input[type='radio']");
+          const explainBox = q.querySelector(".explain");
+          const selected = q.querySelector("input:checked");
+
+          options.forEach((opt) => {
+            const label = opt.parentElement;
+
+            if (opt.value === correct) {
+              label.classList.add("correct-answer");
+            }
+
+            if (selected && opt === selected && opt.value !== correct) {
+              label.classList.add("wrong-answer");
+            }
+
+            opt.disabled = true;
+          });
+
+          if (selected && selected.value === correct) {
+            score++;
+          }
+
+          explainBox.style.display = "block";
+          explainBox.innerHTML = `📘 <b>التفسير:</b> ${explanation}`;
+        });
+
+        const result = document.getElementById("result");
+        result.style.display = "block";
+        result.innerHTML = `✅ نتيجتك النهائية: ${score} / ${questions.length}`;
+      }
+    </script>
+  </body>
+</html>
