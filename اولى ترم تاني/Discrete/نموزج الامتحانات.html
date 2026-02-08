@@ -138,6 +138,18 @@
     </header>
 
     <div class="container">
+      <div
+        id="timer"
+        style="
+          text-align: center;
+          font-size: 20px;
+          margin-bottom: 20px;
+          color: #00ff99;
+        "
+      >
+        ⏱ الوقت المتبقي: 05:30
+      </div>
+
       <h2>أجب عن الأسئلة التالية</h2>
 
       <!-- سؤال 1 -->
@@ -238,6 +250,30 @@
         result.style.display = "block";
         result.innerHTML = `✅ نتيجتك النهائية: ${score} / ${questions.length}`;
       }
+    </script>
+    <script>
+      let timeLeft = 330; //  الوقت بالثواني
+
+      const timerDisplay = document.getElementById("timer");
+
+      const countdown = setInterval(() => {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+
+        // اضافة صفر قبل الرقم اذا كان أقل من 10
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        timerDisplay.textContent = `⏱ الوقت المتبقي: ${minutes}:${seconds}`;
+
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          alert("انتهى الوقت! سيتم تسليم الامتحان تلقائيًا.");
+          submitExam();
+        }
+
+        timeLeft--;
+      }, 1000);
     </script>
   </body>
 </html>
