@@ -2,278 +2,434 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>امتحان مقدمة البرمجة</title>
-
     <link
-      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap"
       rel="stylesheet"
     />
 
     <style>
       * {
         box-sizing: border-box;
-        font-family: "Tajawal", sans-serif;
+        font-family:
+          Tajawal,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          Arial;
       }
-
       body {
         margin: 0;
         color: #fff;
       }
-
       #bg-video {
         position: fixed;
         top: 0;
         left: 0;
-        min-width: 100%;
-        min-height: 100%;
-        z-index: -1;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
+        z-index: -1;
       }
-
-      header {
-        padding: 20px;
-        text-align: center;
-        background: rgba(0, 0, 0, 0.6);
-      }
-
       .container {
         max-width: 900px;
         margin: 30px auto;
-        background: rgba(0, 0, 0, 0.65);
+        background: rgba(0, 0, 0, 0.7);
         padding: 25px;
         border-radius: 15px;
       }
 
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
       h2 {
+        margin: 0;
         text-align: center;
-        margin-bottom: 25px;
       }
 
-      .question {
+      .timer-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .timer-text {
+        font-weight: 700;
+        color: #fffb;
+        min-width: 140px;
+        text-align: start;
+      }
+      .timer-danger {
+        color: #ff6b6b;
+      }
+      .timer-wrap {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.15);
+        height: 10px;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .timer-bar {
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(90deg, #00ff99, #00c6ff);
+        transition: width 1s linear;
+      }
+      .muted {
+        color: #fffc;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .group-title {
+        color: #00c6ff;
+        font-size: 20px;
+        text-align: center;
+        margin: 22px 0 10px;
+      }
+      .sub-question {
         background: rgba(255, 255, 255, 0.1);
         padding: 15px;
         border-radius: 10px;
-        margin-bottom: 20px;
-      }
-
-      .question h3 {
         margin-bottom: 10px;
-        font-size: 18px;
       }
-
+      .q-text {
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
       label {
         display: block;
-        margin-bottom: 8px;
+        margin: 6px 0;
         cursor: pointer;
       }
 
-      input[type="radio"] {
-        margin-left: 8px;
-      }
-
       .btn {
-        display: block;
         width: 100%;
         padding: 15px;
         font-size: 18px;
         border: none;
         border-radius: 10px;
-        cursor: pointer;
         background: #00c6ff;
-        color: #000;
         font-weight: bold;
-        transition: 0.3s;
+        cursor: pointer;
+        color: #001018;
       }
-
-      .btn:hover {
-        background: #00a3d9;
-      }
-
-      .result {
-        margin-top: 25px;
-        padding: 15px;
-        border-radius: 10px;
-        font-size: 20px;
-        text-align: center;
-        display: none;
-        background: rgba(0, 0, 0, 0.4);
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
       }
 
       .correct-answer {
         color: #00ff99;
-        font-weight: bold;
       }
-
       .wrong-answer {
         color: #ff6b6b;
-        font-weight: bold;
       }
-
       .explain {
-        margin-top: 10px;
-        padding: 10px;
-        border-radius: 8px;
-        background: rgba(0, 0, 0, 0.4);
-        font-size: 15px;
         display: none;
+        margin-top: 8px;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 8px;
+        border-radius: 8px;
       }
 
-      footer {
+      .result {
+        display: none;
+        margin-top: 20px;
         text-align: center;
-        padding: 15px;
-        background: rgba(0, 0, 0, 0.6);
-        margin-top: 30px;
+        font-size: 20px;
       }
     </style>
   </head>
 
   <body>
+    <!-- فيديو الخلفية -->
     <video autoplay muted loop playsinline id="bg-video">
       <source src="خلفيه.mp4" type="video/mp4" />
     </video>
 
-    <header>
-      <p>امتحان مقدمة البرمجة</p>
-    </header>
-
     <div class="container">
-      <div
-        id="timer"
-        style="
-          text-align: center;
-          font-size: 20px;
-          margin-bottom: 20px;
-          color: #00ff99;
-        "
-      >
-        ⏱ الوقت المتبقي: 05:30
+      <div class="header">
+        <h2>امتحان مقدمة البرمجة</h2>
       </div>
 
-      <h2>أجب عن الأسئلة التالية</h2>
-
-      <!-- سؤال 1 -->
-      <div
-        class="question"
-        data-answer="b"
-        data-explain="البرمجة هي عملية كتابة أوامر وتعليمات يفهمها الحاسوب لتنفيذ مهام محددة."
-      >
-        <h3>1️⃣ ما هي البرمجة؟</h3>
-
-        <label><input type="radio" name="q1" value="a" /> نوع من الأجهزة</label>
-        <label
-          ><input type="radio" name="q1" value="b" /> طريقة لكتابة أوامر
-          للحاسوب</label
-        >
-        <label><input type="radio" name="q1" value="c" /> نظام تشغيل</label>
-
-        <div class="explain"></div>
+      <!-- العداد -->
+      <div class="timer-row" aria-live="polite">
+        <div class="timer-text" id="timer-text">الوقت المتبقي: 15:00</div>
+        <div class="timer-wrap" aria-hidden="true">
+          <div class="timer-bar" id="timer-bar"></div>
+        </div>
       </div>
+      <div class="muted">* سيتم تسليم الامتحان تلقائيًا عند انتهاء الوقت.</div>
 
-      <!-- سؤال 2 -->
+      <!-- ======= المجموعة 1 ======= -->
+      <div class="group-title">A={2,{5},7,{8},9}</div>
+
       <div
-        class="question"
+        class="sub-question question"
         data-answer="a"
-        data-explain="الخوارزميات يمكن كتابتها بأي لغة أو حتى باللغة العربية طالما توضح الخطوات بشكل منطقي."
+        data-explain="العدد بياخد ∈ "
       >
-        <h3>2️⃣ أي لغة تستخدم لكتابة الخوارزميات؟</h3>
-
-        <label><input type="radio" name="q2" value="a" /> أي لغة برمجة</label>
-        <label><input type="radio" name="q2" value="b" /> HTML فقط</label>
-        <label><input type="radio" name="q2" value="c" /> CSS فقط</label>
-
+        <div class="q-text">(1.1)A∈2</div>
+        <label><input type="radio" name="g1_q1" value="a" />صح</label>
+        <label><input type="radio" name="g1_q1" value="b" />غلط</label>
         <div class="explain"></div>
       </div>
 
-      <!-- سؤال 3 -->
       <div
-        class="question"
-        data-answer="c"
-        data-explain="المصفوفة هي تركيب بيانات يُستخدم لتخزين مجموعة من العناصر المتشابهة تحت اسم واحد."
+        class="sub-question question"
+        data-answer="b"
+        data-explain="العدد بياخد ∈"
       >
-        <h3>3️⃣ ما هي المصفوفة؟</h3>
-
-        <label><input type="radio" name="q3" value="a" /> دالة</label>
-        <label><input type="radio" name="q3" value="b" /> شرط</label>
-        <label
-          ><input type="radio" name="q3" value="c" /> مجموعة عناصر
-          متشابهة</label
-        >
-
+        <div class="q-text">1.2) A∈5</div>
+        <label><input type="radio" name="g1_q2" value="a" /> صح</label>
+        <label><input type="radio" name="g1_q2" value="b" /> غلط </label>
         <div class="explain"></div>
       </div>
 
-      <button class="btn" onclick="submitExam()">تسليم الامتحان</button>
+      <div
+        class="sub-question question"
+        data-answer="b"
+        data-explain="المجموعه بتاخد ⊆"
+      >
+        <div class="q-text">1.3) A∈{7}</div>
+        <label><input type="radio" name="g1_q3" value="a" /> صح</label>
+        <label><input type="radio" name="g1_q3" value="b" /> غلط </label>
+        <div class="explain"></div>
+      </div>
 
+      <div
+        class="sub-question question"
+        data-answer="b"
+        data-explain="العدد بياخد ∈ مش ⊆"
+      >
+        <div class="q-text">1.4) A ⊆ 9</div>
+        <label><input type="radio" name="g1_q4" value="a" />صح</label>
+        <label><input type="radio" name="g1_q4" value="b" />غلط</label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="b"
+        data-explain="المجموعه بتاخد ⊆"
+      >
+        <div class="q-text">1.5) A ⊆ {8}</div>
+        <label><input type="radio" name="g1_q5" value="a" />صح</label>
+        <label><input type="radio" name="g1_q5" value="b" />غلط</label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="a"
+        data-explain="الحلقة for تُكرر تنفيذ كتلة تعليمات عِدّة مرات، وليست مرة واحدة."
+      >
+        <div class="q-text">1.6) A ⊆ {2}</div>
+        <label><input type="radio" name="g1_q6" value="a" />صح</label>
+        <label><input type="radio" name="g1_q6" value="b" />غلط</label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="a"
+        data-explain="العدد بياخد ∈"
+      >
+        <div class="q-text">1.7) A ∈ 9</div>
+        <label><input type="radio" name="g1_q7" value="a" />صح</label>
+        <label><input type="radio" name="g1_q7" value="b" />غلط</label>
+        <div class="explain"></div>
+      </div>
+
+      <!-- ======= المجموعة 2 ======= -->
+      <div class="group-title">B={2,4,6,{8}}</div>
+
+      <div
+        class="sub-question question"
+        data-answer="a"
+        data-explain="المصفوفة Array تُخزّن عدة قيم من نفس النوع في هيكل واحد."
+      >
+        <div class="q-text">2.1) 2 - - - - B</div>
+        <label><input type="radio" name="g2_q1" value="a" /> ∈ </label>
+        <label><input type="radio" name="g2_q1" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="a"
+        data-explain="الدوال يمكن أن تُعيد قيمة باستخدام return (إن كانت معرفة على ذلك)."
+      >
+        <div class="q-text">2.2) 4 - - - - B</div>
+        <label><input type="radio" name="g2_q2" value="a" /> ∈ </label>
+        <label><input type="radio" name="g2_q2" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="b"
+        data-explain="المفسّر Interpreter ينفّذ الشفرة سطرًا بسطر أثناء التشغيل، بعكس المترجم Compiler الذي ينتج ملفًا تنفيذيًا غالبًا."
+      >
+        <div class="q-text">2.3) {6} - - - - B</div>
+        <label><input type="radio" name="g2_q3" value="a" /> ∈ </label>
+        <label><input type="radio" name="g2_q3" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="a"
+        data-explain="عامل المقارنة في أغلب اللغات هو == (أو === في جافاسكربت)، أما = فهي للإسناد."
+      >
+        <div class="q-text">2.4) {8} - - - - B</div>
+        <label><input type="radio" name="g2_q4" value="a" /> ∈ </label>
+        <label><input type="radio" name="g2_q4" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="b"
+        data-explain="عامل المقارنة في أغلب اللغات هو == (أو === في جافاسكربت)، أما = فهي للإسناد."
+      >
+        <div class="q-text">2.5) {2} - - - - B</div>
+        <label><input type="radio" name="g2_q5" value="a" /> ∈ </label>
+        <label><input type="radio" name="g2_q5" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <button class="btn" id="submit-btn" onclick="submitExam()">
+        تسليم الامتحان
+      </button>
       <div class="result" id="result"></div>
     </div>
 
-    <footer>
-      <p>© جامعة اللوتس 2026</p>
-    </footer>
-
     <script>
-      function submitExam() {
+      // ======= الإعدادات =======
+      const EXAM_DURATION = 900; // 2 دقائق (غيرها حسب رغبتك)
+      const AUTO_SUBMIT_ON_TIMEOUT = true;
+
+      // ======= حالة العداد =======
+      let timeLeft = EXAM_DURATION;
+      let timerId = null;
+      let submitted = false;
+
+      const timerTextEl = document.getElementById("timer-text");
+      const timerBarEl = document.getElementById("timer-bar");
+      const submitBtn = document.getElementById("submit-btn");
+
+      updateTimerUI(timeLeft, EXAM_DURATION);
+      startTimer();
+
+      function startTimer() {
+        if (timerId) return;
+        const start = performance.now();
+        const endAt = start + EXAM_DURATION * 1000;
+
+        function tick(now) {
+          const msLeft = Math.max(0, endAt - now);
+          timeLeft = Math.ceil(msLeft / 1000);
+          updateTimerUI(timeLeft, EXAM_DURATION);
+          if (msLeft <= 0) {
+            handleTimeout();
+            return;
+          }
+          timerId = requestAnimationFrame(tick);
+        }
+        timerId = requestAnimationFrame(tick);
+      }
+
+      function stopTimer() {
+        if (timerId) {
+          cancelAnimationFrame(timerId);
+          timerId = null;
+        }
+      }
+
+      function handleTimeout() {
+        stopTimer();
+        lockOptions();
+        submitBtn.disabled = true;
+        if (AUTO_SUBMIT_ON_TIMEOUT && !submitted) submitExam(true);
+        else {
+          timerTextEl.textContent = "انتهى الوقت!";
+          timerTextEl.classList.add("timer-danger");
+        }
+      }
+
+      function updateTimerUI(secondsLeft, totalSeconds) {
+        timerTextEl.textContent = "الوقت المتبقي: " + formatTime(secondsLeft);
+        const dangerThreshold = Math.ceil(totalSeconds * 0.15);
+        if (secondsLeft <= dangerThreshold)
+          timerTextEl.classList.add("timer-danger");
+        else timerTextEl.classList.remove("timer-danger");
+        const pct = Math.max(
+          0,
+          Math.min(100, (secondsLeft / totalSeconds) * 100),
+        );
+        timerBarEl.style.width = pct + "%";
+      }
+
+      function formatTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      }
+
+      function lockOptions() {
+        document
+          .querySelectorAll(".question input[type=radio]")
+          .forEach((opt) => {
+            opt.disabled = true;
+          });
+      }
+      function submitExam(fromTimeout = false) {
+        if (submitted) return;
+        submitted = true;
+        stopTimer();
+
         let score = 0;
         const questions = document.querySelectorAll(".question");
 
         questions.forEach((q) => {
           const correct = q.dataset.answer;
-          const explanation = q.dataset.explain;
-          const options = q.querySelectorAll("input[type='radio']");
-          const explainBox = q.querySelector(".explain");
           const selected = q.querySelector("input:checked");
+          const explain = q.querySelector(".explain");
 
-          options.forEach((opt) => {
-            const label = opt.parentElement;
-
-            if (opt.value === correct) {
-              label.classList.add("correct-answer");
-            }
-
-            if (selected && opt === selected && opt.value !== correct) {
-              label.classList.add("wrong-answer");
-            }
-
+          // قفل كل الاختيارات + تلوين الصحيح والخطأ
+          q.querySelectorAll("input").forEach((opt) => {
             opt.disabled = true;
+            if (opt.value === correct)
+              opt.parentElement.classList.add("correct-answer");
+            if (selected && opt === selected && opt.value !== correct)
+              opt.parentElement.classList.add("wrong-answer");
           });
 
-          if (selected && selected.value === correct) {
-            score++;
-          }
+          // حساب الدرجة
+          if (selected && selected.value === correct) score++;
 
-          explainBox.style.display = "block";
-          explainBox.innerHTML = `📘 <b>التفسير:</b> ${explanation}`;
+          // ❌ إخفاء التفسير بالكامل
+          explain.style.display = "none";
+          explain.innerHTML = "";
         });
 
-        const result = document.getElementById("result");
-        result.style.display = "block";
-        result.innerHTML = `✅ نتيجتك النهائية: ${score} / ${questions.length}`;
+        submitBtn.disabled = true;
+
+        const resEl = document.getElementById("result");
+        resEl.style.display = "block";
+        resEl.innerHTML =
+          `✅ نتيجتك النهائية: ${score} / ${questions.length}` +
+          (fromTimeout ? "<br>⏱️ تم التسليم تلقائيًا لانتهاء الوقت." : "");
+
+        resEl.scrollIntoView({ behavior: "smooth", block: "center" });
       }
-    </script>
-    <script>
-      let timeLeft = 330; //  الوقت بالثواني
-
-      const timerDisplay = document.getElementById("timer");
-
-      const countdown = setInterval(() => {
-        let minutes = Math.floor(timeLeft / 60);
-        let seconds = timeLeft % 60;
-
-        // اضافة صفر قبل الرقم اذا كان أقل من 10
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        timerDisplay.textContent = `⏱ الوقت المتبقي: ${minutes}:${seconds}`;
-
-        if (timeLeft <= 0) {
-          clearInterval(countdown);
-          alert("انتهى الوقت! سيتم تسليم الامتحان تلقائيًا.");
-          submitExam();
-        }
-
-        timeLeft--;
-      }, 1000);
     </script>
   </body>
 </html>
