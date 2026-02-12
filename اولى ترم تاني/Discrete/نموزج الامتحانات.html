@@ -342,7 +342,7 @@
 
       <!-- العداد -->
       <div class="timer-row" aria-live="polite">
-        <div class="timer-text" id="timer-text">الوقت المتبقي: 15:00</div>
+        <div class="timer-text" id="timer-text">الوقت المتبقي: 20:00</div>
         <div class="timer-wrap" aria-hidden="true">
           <div class="timer-bar" id="timer-bar"></div>
         </div>
@@ -487,6 +487,71 @@
         <div class="explain"></div>
       </div>
 
+      <!-- ======= المجموعة 3 ======= -->
+      <div class="group-title">A={3,{4},{5},7,9}</div>
+
+      <div
+        class="sub-question question"
+        data-answer="a"
+        data-explain="المصفوفة Array تُخزّن عدة قيم من نفس النوع في هيكل واحد."
+      >
+        <div class="q-text">3.1) 3 - - - - A</div>
+        <label><input type="radio" name="g3_q1" value="a" /> ∈ </label>
+        <label><input type="radio" name="g3_q1" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="a"
+        data-explain="المصفوفة Array تُخزّن عدة قيم من نفس النوع في هيكل واحد."
+      >
+        <div class="q-text">3.2) {4} - - - - A</div>
+        <label><input type="radio" name="g3_q2" value="a" /> ∈ </label>
+        <label><input type="radio" name="g3_q2" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="b"
+        data-explain="المصفوفة Array تُخزّن عدة قيم من نفس النوع في هيكل واحد."
+      >
+        <div class="q-text">3.3) {{5}} - - - - A</div>
+        <label><input type="radio" name="g3_q3" value="a" /> ∈ </label>
+        <label><input type="radio" name="g3_q3" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div class="sub-question question" data-answer="a">
+        <div class="q-text">3.4) 7 - - - - A</div>
+        <label><input type="radio" name="g3_q4" value="a" /> ∈ </label>
+        <label><input type="radio" name="g3_q4" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="a"
+        data-explain="المصفوفة Array تُخزّن عدة قيم من نفس النوع في هيكل واحد."
+      >
+        <div class="q-text">3.5) 9 - - - - A</div>
+        <label><input type="radio" name="g3_q5" value="a" /> ∈ </label>
+        <label><input type="radio" name="g3_q5" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
+      <div
+        class="sub-question question"
+        data-answer="b"
+        data-explain="المصفوفة Array تُخزّن عدة قيم من نفس النوع في هيكل واحد."
+      >
+        <div class="q-text">3.6) {3} - - - - A</div>
+        <label><input type="radio" name="g3_q6" value="a" /> ∈ </label>
+        <label><input type="radio" name="g3_q6" value="b" /> ⊆ </label>
+        <div class="explain"></div>
+      </div>
+
       <button class="btn" id="submit-btn" onclick="submitExam()">
         تسليم الامتحان
       </button>
@@ -495,7 +560,7 @@
 
     <script>
       // ======= الإعدادات =======
-      const EXAM_DURATION = 900; // 2 دقائق (غيرها حسب رغبتك)
+      const EXAM_DURATION = 1200; // 2 دقائق (غيرها حسب رغبتك)
       const AUTO_SUBMIT_ON_TIMEOUT = true;
 
       // ======= حالة العداد =======
